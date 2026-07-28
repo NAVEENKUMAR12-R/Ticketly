@@ -3,10 +3,15 @@ import Movie from "../models/Movie.js";
 import Show from "../models/Show.js";
 import { inngest } from "../inngest/index.js";
 
-// API to get now playing movies from TMDB API
+// API to get now playing Tamil movies from TMDB API
 export const getNowPlayingMovies = async (req, res)=>{
     try {
-        const { data } = await axios.get('https://api.themoviedb.org/3/movie/now_playing', {
+        const { data } = await axios.get('https://api.themoviedb.org/3/discover/movie', {
+            params: {
+                with_original_language: 'ta',
+                region: 'IN',
+                sort_by: 'popularity.desc'
+            },
             headers: {Authorization : `Bearer ${process.env.TMDB_API_KEY}`}
         })
 
