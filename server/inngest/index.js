@@ -100,7 +100,7 @@ const sendBookingConfirmationEmail = inngest.createFunction(
                             <strong>Time:</strong> ${new Date(booking.show.showDateTime).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}
                         </p>
                         <p>Enjoy the show! 🍿</p>
-                        <p>Thanks for booking with us!<br/>— QuickShow Team</p>
+                        <p>Thanks for booking with us!<br/>— Ticketly Team</p>
                     </div>`
         })
     }
@@ -164,7 +164,7 @@ const sendShowReminders = inngest.createFunction(
                             </p>
                             <p>It starts in approximately <strong>8 hours</strong> - make sure you're ready!</p>
                             <br/>
-                            <p>Enjoy the show!<br/>QuickShow Team</p>
+                            <p>Enjoy the show!<br/>Ticketly Team</p>
                         </div>`
                 }))
             )
@@ -201,7 +201,7 @@ const sendNewShowNotifications = inngest.createFunction(
                     <h3 style="color: #F84565;">"${movieTitle}"</h3>
                     <p>Visit our website</p>
                     <br/>
-                    <p>Thanks,<br/>QuickShow Team</p>
+                    <p>Thanks,<br/>Ticketly Team</p>
                 </div>`;
 
                 await sendEmail({
