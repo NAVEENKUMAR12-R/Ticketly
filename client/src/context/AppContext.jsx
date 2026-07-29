@@ -62,8 +62,22 @@ export const AppProvider = ({ children })=>{
         }
     }
 
+    const [featuredMovie, setFeaturedMovie] = useState(null)
+
+    const fetchFeaturedMovie = async () => {
+        try {
+            const { data } = await axios.get('/api/show/featured-movie')
+            if (data.success && data.movie) {
+                setFeaturedMovie(data.movie)
+            }
+        } catch (error) {
+            console.error('Error fetching featured movie:', error)
+        }
+    }
+
     useEffect(()=>{
         fetchShows()
+        fetchFeaturedMovie()
     },[])
 
     useEffect(()=>{
@@ -75,7 +89,7 @@ export const AppProvider = ({ children })=>{
 
     const value = {
         axios,
-        fetchIsAdmin,
+        fetchIsAdmin, fetchShows, featuredMovie, fetchFeaturedMovie,
         user, getToken, navigate, isAdmin, shows, 
         favoriteMovies, fetchFavoriteMovies, image_base_url
     }

@@ -14,6 +14,8 @@ const movieSchema = new mongoose.Schema(
         casts: {type: Array, required: true},
         vote_average: {type: Number, required: true},
         runtime: {type: Number, required: true},
+        isFeatured: {type: Boolean, default: false},
+        trailer_url: {type: String, default: ""}
     }, {timestamps: true}
 )
 

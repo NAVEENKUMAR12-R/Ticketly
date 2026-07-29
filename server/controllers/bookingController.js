@@ -1,6 +1,8 @@
 import { inngest } from "../inngest/index.js";
 import Booking from "../models/Booking.js";
-import Show from "../models/Show.js"
+import Show from "../models/Show.js";
+import User from "../models/User.js";
+import { clerkClient } from "@clerk/express";
 import stripe from 'stripe'
 
 
@@ -26,6 +28,24 @@ export const createBooking = async (req, res)=>{
         const {userId} = req.auth();
         const {showId, selectedSeats} = req.body;
         const { origin } = req.headers;
+
+        // Auto sync user to DB if missing
+        try {
+            const existingUser = await User.findById(userId);
+            if (!existingUser) {
+                const clerkUser = await clerkClient.users.getUser(userId);
+                if (clerkUser) {
+                    await User.create({
+                        _id: userId,
+                        name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || clerkUser.username || "User",
+                        email: clerkUser.emailAddresses[0]?.emailAddress || "",
+                        image: clerkUser.imageUrl || ""
+                    });
+                }
+            }
+        } catch (err) {
+            console.warn("User auto-sync failed:", err.message);
+        }
 
         // Check if the seat is available for the selected show
         const isAvailable = await checkSeatsAvailability(showId, selectedSeats)
