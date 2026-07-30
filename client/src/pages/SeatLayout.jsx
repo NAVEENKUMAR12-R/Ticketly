@@ -88,7 +88,8 @@ const SeatLayout = () => {
         if (data.success){
           window.location.href = data.url;
         }else{
-          toast.error(data.message)
+          toast.error(data.message);
+          getOccupiedSeats();
         }
     } catch (error) {
       toast.error(error.message)
